@@ -1,0 +1,11 @@
+.form {
+  display: flex;
+  gap: .5rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: .9rem;
+}
+
+.input {
+  height: .5rem;
+}

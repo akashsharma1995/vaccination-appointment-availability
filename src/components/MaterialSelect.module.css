@@ -1,0 +1,10 @@
+.select {
+  height: 2.5rem;
+  width: 15rem;
+}
+
+@media all and (max-width: 480px) {
+  .select {
+    width: 100%;
+  }
+}

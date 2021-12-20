@@ -1,0 +1,29 @@
+.container {
+  width: 100%;
+  overflow: auto;
+  border-top: 1px solid var(--primary-border-color);
+  height: calc(100vh - 15rem);
+}
+
+.row {
+  width: 1600px;
+  display: grid;
+  grid-template-columns: 250px repeat(7, 1fr);
+  border-bottom: 1px solid var(--primary-border-color);
+  border-left: 1px solid var(--primary-border-color);
+  border-right: 1px solid var(--primary-border-color);
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  background: white;
+}
+
+/* Head section */
+.date-head {
+  text-align: center;
+  margin: .2rem;
+}
+
+.no-item {
+  text-align: center;
+}

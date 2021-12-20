@@ -1,0 +1,27 @@
+.slot-text {
+  color: darkgreen;
+  font-weight: 600;
+}
+
+.dose {
+  font-size: .7rem;
+  background-color: rgb(238, 128, 2);
+  border-radius: 3px;
+  padding: 0.1rem 0.3rem 0.2rem 0.3rem;
+  color: white;
+  font-weight: 500;
+}
+
+.covaxin {
+  background-color: darkblue;
+}
+
+.precaution {
+  background-color: darkslategray;
+}
+
+.slot-details {
+  display: flex;
+  justify-content: space-between;
+  margin: .3rem;
+}
