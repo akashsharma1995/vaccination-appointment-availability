@@ -8,4 +8,17 @@
 
 .input {
   height: .5rem;
+} 
+
+.loading {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+}
+
+@media all and (max-width: 480px) {
+  .form > * {
+    width: 100%;
+  }
 }

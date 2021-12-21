@@ -1,7 +1,8 @@
-import React, { useState, useEffect, useContext, useCallback } from "react";
+import React, { useState, useEffect, useContext, Fragment } from "react";
 import Button from "@mui/material/Button";
 import Snackbar from "@mui/material/Snackbar";
 import MaterialSelect from "./MaterialSelect";
+import LinearProgress from '@mui/material/LinearProgress';
 import TextField from "@mui/material/TextField";
 import CentersContext from "../store/centers-context";
 import classes from "./SearchForm.module.css";
@@ -18,6 +19,16 @@ const initialState = {
   },
   pin: "",
 };
+
+const getCurrentDateString = () => {
+  const dateToday = new Date();
+  // Getting date string
+  let day = dateToday.getDate();
+  day = day.toString().length === 1 ? `0${day}` : day;
+  let month = dateToday.getMonth() + 1;
+  month = month.toString().length === 1 ? `0${month}` : month;
+  return `${day}-${month}-${dateToday.getFullYear()}`;
+}
 
 const SearchForm = ({ byDistrict, byPin }) => {
   const [states, setStates] = useState([]);
@@ -99,13 +110,7 @@ const SearchForm = ({ byDistrict, byPin }) => {
   };
 
   const searchSlots = () => {
-    const dateToday = new Date();
-    // Getting date string
-    let day = dateToday.getDate();
-    day = day.toString().length === 1 ? `0${day}` : day;
-    let month = dateToday.getMonth() + 1;
-    month = month.toString().length === 1 ? `0${month}` : month;
-    let queryDate = `${day}-${month}-${dateToday.getFullYear()}`;
+    const dateToday = getCurrentDateString();
     // Generating query
     const searchByDistrict = byDistrict;
     const query = searchByDistrict
@@ -113,11 +118,12 @@ const SearchForm = ({ byDistrict, byPin }) => {
           "calendarByDistrict",
           "district_id",
           filters.district.district_id,
-          queryDate
+          dateToday
         )
-      : generateQuery("calendarByPin", "pincode", filters.pin, queryDate);
+      : generateQuery("calendarByPin", "pincode", filters.pin, dateToday);
 
     if (searchByDistrict ? filters.district.district_id : filters.pin) {
+      // Sending Request to fetch centers
       sendRequest(
         {
           url: query,
@@ -128,12 +134,13 @@ const SearchForm = ({ byDistrict, byPin }) => {
     }
   };
 
-  const generateQuery = (path, searchBy, searchByValue, queryDate) => {
-    return `https://cdn-api.co-vin.in/api/v4/appointment/sessions/public/${path}?${searchBy}=${searchByValue}&date=${queryDate}`;
+  const generateQuery = (path, searchBy, searchByValue, dateToday) => {
+    return `https://cdn-api.co-vin.in/api/v4/appointment/sessions/public/${path}?${searchBy}=${searchByValue}&date=${dateToday}`;
   };
 
   return (
-    <>
+    <Fragment>
+      {loading && <div className={classes.loading}><LinearProgress/></div>}
       <form className={classes.form}>
         {byDistrict ? (
           <>
@@ -188,7 +195,7 @@ const SearchForm = ({ byDistrict, byPin }) => {
         )}
       </form>
       <Snackbar open={openSnackbar} autoHideDuration={6000} message={error} />
-    </>
+    </Fragment>
   );
 };
 
